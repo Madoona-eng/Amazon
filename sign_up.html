@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f3f3;
+        }
+        .signup-box {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: auto;
+        }
+        .amazon-logo {
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .btn-amazon {
+            background-color: #f0c14b;
+            border-color: #a88734;
+            width: 100%;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-lg-5">
+                <div class="signup-box">
+                    <img style="margin-top: 150px;" src="comp_3.gif" alt="Amazon Logo" class="amazon-logo" width="200">
+                    <h4 class="text-center">Create Account</h4>
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your name</label>
+                            <input type="text" class="form-control" id="name" placeholder="First and last name">
+                            <small class="error" id="nameError"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <small class="error" id="emailError"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile number</label>
+                            <div class="input-group">
+                                <select class="form-select" style="max-width: 100px;">
+                                    <option selected>EG +20</option>
+                                    <option>US +1</option>
+                                    <option>UK +44</option>
+                                </select>
+                                <input type="tel" class="form-control" id="mobile" placeholder="Mobile number">
+                            </div>
+                            <small class="error" id="mobileError"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="At least 6 characters">
+                            <small class="text-muted">Passwords must be at least 6 characters.</small>
+                            <small class="error" id="passwordError"></small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="repassword" class="form-label">Re-enter password</label>
+                            <input type="password" class="form-control" id="repassword">
+                            <small class="error" id="repasswordError"></small>
+                        </div>
+                        <button type="submit" class="btn btn-amazon">Sign Up</button>
+                    </form>
+                    <p class="mt-3 text-center">Already have an account? <a href="login.html">Sign in</a></p>
+                    <p class="text-muted small text-center">By creating an account, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let repassword = document.getElementById("repassword").value.trim();
+
+            let nameError = document.getElementById("nameError");
+            let emailError = document.getElementById("emailError");
+            let mobileError = document.getElementById("mobileError");
+            let passwordError = document.getElementById("passwordError");
+            let repasswordError = document.getElementById("repasswordError");
+
+            nameError.textContent = "";
+            emailError.textContent = "";
+            mobileError.textContent = "";
+            passwordError.textContent = "";
+            repasswordError.textContent = "";
+
+            let isValid = true;
+
+            if (name === "") {
+                nameError.textContent = "Name is required.";
+                isValid = false;
+            }
+
+            if (email === "" || !email.includes("@")) {
+                emailError.textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            if (mobile === "" || isNaN(mobile) || mobile.length < 10) {
+                mobileError.textContent = "Enter a valid mobile number (at least 10 digits).";
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters.";
+                isValid = false;
+            }
+
+            if (repassword !== password) {
+                repasswordError.textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                let user = { name, email, mobile, password };
+                localStorage.setItem("user", JSON.stringify(user));
+                alert("Sign-up successful! You can now log in.");
+                window.location.href = "sign in.html";
+            }
+        });
+    </script>
+</body>
+</html>
